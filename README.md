@@ -245,18 +245,21 @@ Vous pouvez consulter l’état de votre configuration IKE avec les commandes su
 
 ---
 
-**Réponse :**  Le hash n'est pas optimal
+**Réponse :**  
 
-![img](https://cdn.discordapp.com/attachments/814426496881917973/846869320449523783/unknown.png)
+![img](https://cdn.discordapp.com/attachments/814426496881917973/846874725011423245/image-20210520162618608.png)
+
+![img](https://cdn.discordapp.com/attachments/814426496881917973/846874749649027072/image-20210520171153370.png)
+
+Même si R2 défini une policy utilisant Triple-DES avec une priorité plus élevée, c'est la policy utilisant AES qui sera utilisée car elle est commune aux 2 routeurs. Les hash utilisés ne sont pas forcément conseillés car vulnérables (md5) et la taille de clé pour Dillie-Hellman est trop faible (Devrait être au moins 2048 bits)
 
 ---
-
 
 **Question 5: Utilisez la commande `show crypto isakmp key` et faites part de vos remarques :**
 
 ---
 
-**Réponse :**  
+**Réponse :**  La commande permet d'afficher les clés pré-partagées, qui est définie ici comme **cisco-1**.
 
 ---
 
@@ -318,7 +321,7 @@ show crypto map
 
 ## Activation IPsec & test
 
-Pour activer cette configuration IKE & IPsec il faut appliquer le « crypto map » sur l’interface de sortie du trafic où vous voulez que l’encryption prenne place. 
+![image-20210526002330688](images/image-20210526002330688.png)Pour activer cette configuration IKE & IPsec il faut appliquer le « crypto map » sur l’interface de sortie du trafic où vous voulez que l’encryption prenne place. 
 
 Sur R1 il s’agit, selon le schéma, de l’interface « Ethernet0/0 » et la configuration sera :
 
@@ -349,13 +352,11 @@ Pensez à démarrer votre sniffer sur la sortie du routeur R2 vers internet avan
 
 ---
 
-**Réponse :**  La capture wireshark ne detecte pas les pings mais des paquets encapsulé.
+**Réponse :**  La capture wireshark ne détecte pas les pings mais des paquets encapsulé.
 
 ![img](https://cdn.discordapp.com/attachments/814426496881917973/846872682985553930/unknown.png)
 
-Le routeur quand a lui reçoit bien les ping.
-
-https://cdn.discordapp.com/attachments/814426496881917973/846873282800123956/unknown.png
+Le routeur quand a lui reçoit bien les ping. Cela nous indique que IPSec a été mis correctement en place![img](https://cdn.discordapp.com/attachments/814426496881917973/846873282800123956/unknown.png)
 
 ---
 
@@ -364,6 +365,18 @@ https://cdn.discordapp.com/attachments/814426496881917973/846873282800123956/unk
 ---
 
 **Réponse :**  
+
+**IKE**:
+
+- *lifetime*: Renouvellement des SA toutes les 180 secondes.
+- *keepalive*: Suppression des SA si aucune transmission entre les pairs pendant un intervalle de 30 secondes.
+
+**IPSEC**: 
+
+- *lifetime*: Renouvellement des SA toutes les 5 minutes ou après 2.6 MB de données échangées.
+- *idle-time*: Suppression des SA après une période d'inactivité (15 minutes)
+
+
 
 ---
 
@@ -377,7 +390,10 @@ En vous appuyant sur les notions vues en cours et vos observations en laboratoir
 
 ---
 
-**Réponse :**  
+**Réponse :**  2 tunnels ont été mis en place: 
+
+- **IKE** pour l'échange de clés
+- **ESP** pour l'encapsulation et le chiffrement des données
 
 ---
 
@@ -386,16 +402,22 @@ En vous appuyant sur les notions vues en cours et vos observations en laboratoir
 
 ---
 
-**Réponse :**  
+**Réponse :**  Tunnel configuré sur R2 avec IPSEC
+
+```
+crypto ipsec transform-set STRONG esp-aes 192 esp-sha-hmac 
+  mode tunnel
+```
+
+
 
 ---
-
 
 **Question 10: Expliquez quelles sont les parties du paquet qui sont chiffrées. Donnez l’algorithme cryptographique correspondant.**
 
 ---
 
-**Réponse :**  
+**Réponse :**  L'entête IP, l'entête TCP ainsi que les données. (IPSec en tunnel) Le chiffrement utilisé est AES-192
 
 ---
 
@@ -404,7 +426,7 @@ En vous appuyant sur les notions vues en cours et vos observations en laboratoir
 
 ---
 
-**Réponse :**  
+**Réponse :**  Le paquet original + l'entête ESP. Authentification validé avec HMAC-SHA1
 
 ---
 
@@ -413,6 +435,6 @@ En vous appuyant sur les notions vues en cours et vos observations en laboratoir
 
 ---
 
-**Réponse :**  
+**Réponse :**  Toutes les parties authentifiées sauf le nouvel entête IP. Intégrité validé avec HMAC-SHA1 qui calcule l'ICV.
 
 ---
