@@ -30,8 +30,8 @@ Dans ce travail de laboratoire, vous allez configurer des routeurs Cisco émulé
 -	Capture Sniffer avec filtres précis sur la communication à épier
 -	Activation du mode « debug » pour certaines fonctions du routeur
 -	Observation des protocoles IPSec
- 
- 
+
+
 ## Matériel
 
 Le logiciel d'émulation à utiliser c'est eve-ng (vous l'avez déjà employé). Vous trouverez ici un [guide très condensé](files/Manuel_EVE-NG.pdf) pour l'utilisation et l'installation de eve-ng.
@@ -106,7 +106,7 @@ Un « protocol » différent de `up` indique la plupart du temps que l’interfa
 
 ---
 
-**Réponse :**  
+**Réponse :**  Non
 
 ---
 
@@ -143,7 +143,11 @@ Pour votre topologie il est utile de contrôler la connectivité entre :
 
 ---
 
-**Réponse :**  
+**Réponse :**   Oui
+
+![img](https://cdn.discordapp.com/attachments/814426496881917973/846850382973239316/unknown.png)
+
+![img](https://cdn.discordapp.com/attachments/814426496881917973/846850626230681640/unknown.png)
 
 ---
 
@@ -166,7 +170,11 @@ Pour déclencher et pratiquer les captures vous allez « pinger » votre routeur
 
 ---
 
-**Screenshots :**  
+**Screenshots :** 
+
+![img](https://cdn.discordapp.com/attachments/814426496881917973/846867190661775370/unknown.png)
+
+![img](https://cdn.discordapp.com/attachments/814426496881917973/846867769248448552/unknown.png)
 
 ---
 
@@ -188,10 +196,10 @@ Nous allons établir un VPN IKE/IPsec entre le réseau de votre « loopback 1 »
 
 Sur le routeur R1 nous activons un « proposal » IKE. Il s’agit de la configuration utilisée pour la phase 1 du protocole IKE. Le « proposal » utilise les éléments suivants :
 
-| Element          | Value                                                                                                        |
-|------------------|----------------------------------------------------------------------------------------------------------------------|
-| Encryption       | AES 256 bits    
-| Signature        | Basée sur SHA-1                                                                                                      |
+| Element          | Value                                              |
+|------------------|----------------------------------------------------|
+| Encryption      		    | AES 256 bits    							|
+| Signature        | Basée sur SHA-1                             	    |
 | Authentification | Preshared Key                                                                                                        |
 | Diffie-Hellman   | avec des nombres premiers sur 1536 bits                                                                              |
 | Renouvellement   | des SA de la Phase I toutes les 30 minutes                                                                           |
@@ -237,7 +245,9 @@ Vous pouvez consulter l’état de votre configuration IKE avec les commandes su
 
 ---
 
-**Réponse :**  
+**Réponse :**  Le hash n'est pas optimal
+
+![img](https://cdn.discordapp.com/attachments/814426496881917973/846869320449523783/unknown.png)
 
 ---
 
@@ -339,7 +349,13 @@ Pensez à démarrer votre sniffer sur la sortie du routeur R2 vers internet avan
 
 ---
 
-**Réponse :**  
+**Réponse :**  La capture wireshark ne detecte pas les pings mais des paquets encapsulé.
+
+![img](https://cdn.discordapp.com/attachments/814426496881917973/846872682985553930/unknown.png)
+
+Le routeur quand a lui reçoit bien les ping.
+
+https://cdn.discordapp.com/attachments/814426496881917973/846873282800123956/unknown.png
 
 ---
 
