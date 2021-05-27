@@ -251,7 +251,7 @@ Vous pouvez consulter l’état de votre configuration IKE avec les commandes su
 
 ![img](https://cdn.discordapp.com/attachments/814426496881917973/846874749649027072/image-20210520171153370.png)
 
-Même si R2 défini une policy utilisant Triple-DES avec une priorité plus élevée, c'est la policy utilisant AES qui sera utilisée car elle est commune aux 2 routeurs. Les hash utilisés ne sont pas forcément conseillés car vulnérables (md5) et la taille de clé pour Dillie-Hellman est trop faible (Devrait être au moins 2048 bits)
+Même si R2 défini une policy utilisant Triple-DES avec une priorité plus élevée, c'est la policy utilisant AES qui sera utilisée car elle est commune aux 2 routeurs. Les hash utilisés ne sont pas forcément conseillés car vulnérables (md5) et la taille de clé pour Diffie-Hellman est trop faible (Devrait être au moins 2048 bits)
 
 ---
 
