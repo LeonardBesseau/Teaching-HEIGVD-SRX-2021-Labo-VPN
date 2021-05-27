@@ -435,6 +435,6 @@ crypto ipsec transform-set STRONG esp-aes 192 esp-sha-hmac
 
 ---
 
-**Réponse :**  Toutes les parties authentifiées sauf le nouvel entête IP. Intégrité validé avec HMAC-SHA1 qui calcule l'ICV.
+**Réponse :**  Toutes les parties authentifiées sauf le nouvel entête IP. Intégrité validée avec HMAC-SHA1 qui calcule l'ICV.
 
 ---
