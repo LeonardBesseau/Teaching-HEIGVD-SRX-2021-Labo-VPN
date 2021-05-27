@@ -321,7 +321,7 @@ show crypto map
 
 ## Activation IPsec & test
 
-![image-20210526002330688](images/image-20210526002330688.png)Pour activer cette configuration IKE & IPsec il faut appliquer le « crypto map » sur l’interface de sortie du trafic où vous voulez que l’encryption prenne place. 
+Pour activer cette configuration IKE & IPsec il faut appliquer le « crypto map » sur l’interface de sortie du trafic où vous voulez que l’encryption prenne place. 
 
 Sur R1 il s’agit, selon le schéma, de l’interface « Ethernet0/0 » et la configuration sera :
 
